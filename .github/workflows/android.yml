@@ -10,9 +10,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: Use Gradle 7.5
+      # Используем gradle-wrapper, но принудительно переписываем его на 7.5
+      run: |
+        ./gradlew wrapper --gradle-version 7.5 --no-daemon
     - name: Build with Gradle
-      # Вызываем явно версию 7.5, которая есть в образах GitHub
-      run: gradle-7.5 assembleDebug
+      run: ./gradlew assembleDebug --no-daemon
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
