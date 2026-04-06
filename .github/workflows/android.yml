@@ -8,16 +8,17 @@ jobs:
     - name: Build with Gradle
       run: |
         GRADLEW_FILE=$(find . -name "gradlew" -type f | head -n 1)
-        if [ -z "$GRADLEW_FILE" ]; then
-          echo "Error: gradlew not found!"
-          exit 1
-        fi
-        echo "Found gradlew at: $GRADLEW_FILE"
         chmod +x "$GRADLEW_FILE"
         "$GRADLEW_FILE" assembleDebug --no-daemon
+        
+    - name: Debug Output
+      run: |
+        echo "Searching for files in build directory:"
+        find . -name "build" -type d -exec ls -R {} +
         
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: "**/app-debug.apk"
+        path: "**/*.apk"
+        if-no-files-found: error
