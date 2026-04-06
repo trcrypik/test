@@ -10,14 +10,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Install Gradle Wrapper
-      # Генерируем обертку и сразу делаем её исполняемой
-      run: |
-        gradle wrapper --gradle-version 7.5
-        chmod +x gradlew
     - name: Build with Gradle
-      # Теперь вызываем именно ./gradlew, который будет использовать версию 7.5
-      run: ./gradlew assembleDebug
+      # Вызываем явно версию 7.5, которая есть в образах GitHub
+      run: gradle-7.5 assembleDebug
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
