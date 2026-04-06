@@ -7,18 +7,11 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build with Gradle
       run: |
-        if [ -f "gradlew" ]; then
-          GRADLEW_PATH="./gradlew"
-        elif [ -f "test_repo/gradlew" ]; then
-          GRADLEW_PATH="./test_repo/gradlew"
-        else
-          echo "gradlew not found!"
-          exit 1
-        fi
-        chmod +x $GRADLEW_PATH
-        $GRADLEW_PATH assembleDebug --no-daemon
+        cd test_repo
+        chmod +x gradlew
+        ./gradlew assembleDebug --no-daemon
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: "**/app-debug.apk"
+        path: test_repo/app/build/outputs/apk/debug/app-debug.apk
