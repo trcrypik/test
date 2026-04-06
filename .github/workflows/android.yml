@@ -12,15 +12,12 @@ jobs:
         distribution: 'temurin'
     - name: Build with Gradle
       run: |
-        chmod +x ./gradlew
+        cd test_repo
+        chmod +x gradlew
         ./gradlew assembleDebug --no-daemon
-    - name: Find APKs
-      run: |
-        find . -name "*.apk"
-        ls -R app/build/ || echo "app/build/ does not exist"
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: app/build/outputs/apk/debug/
+        path: test_repo/app/build/outputs/apk/debug/app-debug.apk
         if-no-files-found: error
