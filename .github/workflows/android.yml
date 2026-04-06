@@ -11,9 +11,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Build with Gradle
-      run: ./gradlew assembleDebug --no-daemon
+      run: ./gradlew assembleDebug --no-daemon --stacktrace --debug
+    - name: Check for APK
+      run: |
+        echo "Searching for APK files..."
+        find . -name "*.apk"
+        echo "Listing build output dir:"
+        ls -R app/build/outputs/ || echo "Directory app/build/outputs/ does not exist"
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/
