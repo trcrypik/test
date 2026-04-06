@@ -7,18 +7,17 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build with Gradle
       run: |
-        GRADLEW_FILE=$(find . -name "gradlew" -type f | head -n 1)
-        chmod +x "$GRADLEW_FILE"
-        "$GRADLEW_FILE" assembleDebug --no-daemon
-        
+        GRADLEW_PATH=$(find . -name "gradlew" -type f | head -n 1)
+        chmod +x "$GRADLEW_PATH"
+        "$GRADLEW_PATH" assembleDebug --no-daemon
     - name: Debug Output
       run: |
-        echo "Searching for files in build directory:"
-        find . -name "build" -type d -exec ls -R {} +
-        
+        echo "ALL FILES:"
+        find . -maxdepth 4
+        echo "BUILD DIRECTORIES:"
+        find . -name "build" -type d
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: "**/*.apk"
-        if-no-files-found: error
+        path: "**/app-debug.apk"
