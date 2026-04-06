@@ -11,8 +11,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@v3
-      with:
-        arguments: :app:assembleDebug
-    - name: Locate APK
+      run: ./gradlew assembleDebug --info
+    - name: Find APK
       run: find . -name "*.apk"
