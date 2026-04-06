@@ -5,13 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build with Gradle
+    - name: Debug Gradle
       run: |
         chmod +x ./gradlew
-        ./gradlew :app:assembleDebug --no-daemon
-    - name: Locate APK
+        ./gradlew tasks --all
+    - name: Build with Gradle
       run: |
-        echo "Searching for APK:"
-        find . -name "*.apk"
-        echo "BUILD DIRECTORY STRUCTURE:"
-        ls -R app/build/ || echo "Build directory not found"
+        ./gradlew :app:assembleDebug --info
+    - name: List Directory Structure
+      run: ls -R
